@@ -17,6 +17,9 @@ class Post {
     @Column()
     selectedFile:string
 
+    @Column({default:0})
+    likeCount:number
+
     @CreateDateColumn({type: 'date'})
     createdAt:string
 

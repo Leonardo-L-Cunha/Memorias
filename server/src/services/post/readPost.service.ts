@@ -9,9 +9,9 @@ const readPostService = async():Promise<PostTypeReturn> =>{
 
     const post:Post[] = await postRepository.find()
 
-    const posts = ReturnPostSchema.parse(post)
+    
 
-    return posts
+    return post
     
 }
 
