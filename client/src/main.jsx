@@ -6,13 +6,16 @@ import { createStore , applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers'
 import "./index.css"
+import { BrowserRouter } from 'react-router-dom';
 
 
 const store = createStore(reducers, compose(applyMiddleware	(thunk)))
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
 )
