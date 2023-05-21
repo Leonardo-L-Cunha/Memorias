@@ -4,15 +4,16 @@ import Posts from "./components/Posts"
 import Form from "./components/Form/index"
 import useStyles from "./styles"
 import { useDispatch } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getPosts } from "./actions/posts"
-function App() {
+const App = ()  =>{
+  const [currentId, setCurrentId] = useState(null)
   const classes = useStyles()
   const dispatch = useDispatch()
 
   useEffect(()=>{
     dispatch(getPosts())
-  },[dispatch])
+  },[currentId,dispatch])
   return (
     <Container maxidth="lg">
       <AppBar className={classes.appBar} position="static" color="inherit">
@@ -21,12 +22,12 @@ function App() {
       </AppBar>
       <Grow in>
         <Container>
-          <Grid container justifyContent= "space-between" alignItems="stretch" spacing={3}>
+          <Grid className={classes.mainContainer} container  justifyContent="space-between"  alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={7}>
-                <Posts />
+              <Posts setCurrentId={setCurrentId}/>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <Form />
+               <Form currentId={currentId} setCurrentId={setCurrentId}/>
             </Grid>
           </Grid>
         </Container>

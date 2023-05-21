@@ -4,6 +4,8 @@ import { createPostService } from "../services/post/createPost.service";
 import { readPostService } from "../services/post/readPost.service";
 import { NumericType } from "typeorm";
 import { updatedPostService } from "../services/post/updatedPost.service";
+import { deletePostService } from "../services/post/deletePost.service";
+import { likePostService } from "../services/post/likePost.service";
 
 
 const createPostController = async(req:Request, res:Response):Promise<Response> =>{
@@ -30,8 +32,26 @@ const updatedPostController = async(req:Request, res:Response):Promise<Response>
     return res.status(200).json(updatedPost)
 }
 
+const deletePostController = async(req:Request, res:Response):Promise<Response> =>{
+    const postId:number = parseInt(req.params.id)
+
+    await deletePostService(postId)
+
+    return res.status(204).send()
+}
+
+const likePostController = async(req:Request, res:Response):Promise<Response> =>{
+    const postId:number = parseInt(req.params.id) 
+
+    const updatedLike = await likePostService(postId)
+
+    return res.status(200).json(updatedLike)
+}
+
 export {
     createPostController,
     readPostController,
-    updatedPostController	
+    updatedPostController,
+    deletePostController,
+    likePostController	
 }
