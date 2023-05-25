@@ -2,6 +2,7 @@ import { z } from "zod"
 
 const PostSchemaRequest = z.object({
     id: z.number(),
+    creator: z.string(),
     title: z.string(),
     message: z.string(),
     tags: z.string().array(),

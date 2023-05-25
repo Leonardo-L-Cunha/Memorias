@@ -8,7 +8,10 @@ class User {
     id:number
 
     @Column()
-    name:string
+    firstName:string
+
+    @Column()
+    lastName:string
 
     @Column({unique:true})
     email:string
@@ -16,10 +19,7 @@ class User {
     @Column()
     password:string
 
-    @Column({default:null , nullable:true})
-    avatar:string
-
-    @OneToMany(()=> Post, post => post.creator)
+    @OneToMany(()=> Post, post => post.user)
     post:Post[]
 
     @BeforeInsert()

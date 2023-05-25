@@ -19,7 +19,7 @@ export const NavBar = () =>{
                 <Button variant="contained" className={classes.logout} color="secondary">Sair</Button>
             </div>
           ):(
-            <Button component={Link} to="/login" variant="container" color="primary">Login</Button>
+            <Button component={Link} to="/login" variant="contained" color="primary" >Login</Button>
           )}
         </Toolbar>  
       </AppBar>

@@ -2,10 +2,11 @@ import { z } from "zod"
 
 const UserSchemaRequest = z.object({
     id: z.number(),
-    name: z.string(),
+    firstName: z.string(),
+    lastName: z.string(),
     email: z.string().email(),
     password: z.string(),
-    avatar : z.string()
+    
 })
 
 const CreateUserSchema = UserSchemaRequest.omit({

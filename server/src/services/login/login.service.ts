@@ -1,13 +1,14 @@
 import { Repository } from "typeorm";
-import { LoginTypeRequest } from "../../interfaces/login.interfaces";
+import { LoginComplete, LoginTypeRequest } from "../../interfaces/login.interfaces";
 import User from "../../entities/user.entities";
 import AppDataSource from "../../data-source";
 import { AppError } from "../../erros";
 import { compare } from "bcryptjs";
 import jtw  from "jsonwebtoken";
 import "dotenv/config"
+import {LoginCompleteSchema } from "../../schema/login.schema";
 
-const loginService = async(payload:LoginTypeRequest):Promise<string> =>{
+const loginService = async(payload:LoginTypeRequest):Promise<LoginComplete> =>{
     const userRepository:Repository<User> = AppDataSource.getRepository(User)
 
     const findUser:User | null = await userRepository.findOne({
@@ -36,8 +37,12 @@ const loginService = async(payload:LoginTypeRequest):Promise<string> =>{
             subject:findUser.id.toString()
         }
     )
-
-    return token
+    const loginComplete:LoginComplete = {
+        user : findUser,
+        token: token
+    }
+    const login = LoginCompleteSchema.parse(loginComplete)
+    return login
 }
 
 export {

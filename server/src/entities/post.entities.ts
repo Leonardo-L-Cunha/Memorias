@@ -6,6 +6,9 @@ class Post {
     id: number
 
     @Column()
+    creator: string
+
+    @Column()
     title: string
 
     @Column()
@@ -24,7 +27,7 @@ class Post {
     createdAt:string
 
     @ManyToOne(() => User)
-    creator:User
+    user:User
 }
 
 export default Post

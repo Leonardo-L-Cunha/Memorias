@@ -21,7 +21,7 @@ const createPostService = async(payload:PostTypeCreate,userId:number):Promise<Po
 
     const post:Post = postRepository.create({
         ...payload,
-        creator
+        user: creator
     })
 
     await postRepository.save(post)
