@@ -7,7 +7,7 @@ const PostSchemaRequest = z.object({
     message: z.string(),
     tags: z.string().array(),
     selectedFile: z.string(),
-    likeCount: z.number(),
+    likes: z.string().array(),
     createdAt: z.string()
 })
 

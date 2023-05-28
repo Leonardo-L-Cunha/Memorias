@@ -43,7 +43,11 @@ const deletePostController = async(req:Request, res:Response):Promise<Response> 
 const likePostController = async(req:Request, res:Response):Promise<Response> =>{
     const postId:number = parseInt(req.params.id) 
 
-    const updatedLike = await likePostService(postId)
+    const userId: number = res.locals.userId
+
+    
+
+    const updatedLike = await likePostService(postId,userId)
 
     return res.status(200).json(updatedLike)
 }

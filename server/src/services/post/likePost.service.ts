@@ -5,7 +5,7 @@ import AppDataSource from "../../data-source";
 import { AppError } from "../../erros";
 import { PostSchemaRequest, ReturnPostSchema } from "../../schema/post.schema";
 
-const likePostService = async(postId:number):Promise<PostTypeRequest> =>{
+const likePostService = async(postId:number, userId: number):Promise<PostTypeRequest> =>{
     const postRepository:Repository<Post> = AppDataSource.getRepository(Post)
 
     const findPost:Post | null = await postRepository.findOneBy({id:postId})
@@ -14,9 +14,16 @@ const likePostService = async(postId:number):Promise<PostTypeRequest> =>{
         throw new AppError("Post not found", 404)
     }
 
+    const index = findPost.likes.findIndex((id) => id === String(userId))
+
+    if(index === -1){
+        findPost.likes.push(String(userId))
+    } else{
+        findPost.likes = findPost.likes.filter((id) => id !== String(userId))
+    }
+
     const updatedPost = postRepository.create({
-        ...findPost,
-        likeCount:findPost.likeCount + 1
+        ...findPost
     })
 
     await postRepository.save(updatedPost)

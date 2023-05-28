@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
 import useStyles from "./styles"
 import { TextField, Button, Typography, Paper} from "@material-ui/core"
@@ -10,7 +11,10 @@ const Form = ({currentId, setCurrentId}) =>{
     const post = useSelector((state) => currentId ? state.posts.find((p) => p.id === currentId): null)
     const classes = useStyles()
     const dispatch = useDispatch()
+    const user = JSON.parse(localStorage.getItem('user'))
 
+
+    
     useEffect(() =>{
         if(post){
             setPostData(post)
@@ -32,6 +36,17 @@ const Form = ({currentId, setCurrentId}) =>{
         setCurrentId(null)
         setPostData({creator:"",title:"",message:"",tags:[],selectedFile:""})
     }
+
+    if(!user?.user) {
+        return(
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center">
+                    Por favor faça login para criar suas proprias memorias e curtir outras memorias 
+                </Typography>
+            </Paper>
+        )
+    }
+
     return (
         <Paper className={classes.paper}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit} >

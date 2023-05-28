@@ -3,14 +3,27 @@ import axios from "axios";
 
 const baseUrl = 'http://localhost:3000/'
 
-export const fetchPosts =  () => axios.get(`${baseUrl}post`)
+const api = axios.create({baseURL:baseUrl})
 
-export const createPost = (newPost) => axios.post(`${baseUrl}post`, newPost)
+const token = JSON.parse(localStorage.getItem('user'))
 
-export const updatedPost = (id,updatedPost) => axios.patch(`${baseUrl}post/${id}`,updatedPost)
+api.interceptors.request.use((req => {
+    if(token){
+        req.headers.Authorization = `Bearer ${token.token}`
+    }
+    return req
+})) 
 
-export const deletePost = (id) => axios.delete(`${baseUrl}post/${id}`)
+export const fetchPosts =  () => api.get('post')
 
-export const likePost = (id) => axios.patch(`${baseUrl}post/${id}/likePost`)
+export const createPost = (newPost) => api.post('post', newPost)
 
-export const createUser = (data) => axios.post(`${baseUrl}users`, data)
+export const updatedPost = (id,updatedPost) => api.patch(`post/${id}`,updatedPost)
+
+export const deletePost = (id) => api.delete(`post/${id}`)
+
+export const likePost = (id) => api.patch(`post/${id}/likePost`)
+
+export const createUser = (data) => api.post('users', data)
+
+export const login = (data) => api.post('login',data)

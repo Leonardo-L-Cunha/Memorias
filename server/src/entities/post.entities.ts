@@ -20,8 +20,8 @@ class Post {
     @Column()
     selectedFile:string
 
-    @Column({default:0})
-    likeCount:number
+    @Column('simple-array',{default:[]})
+    likes:string[]
 
     @CreateDateColumn({type: 'date'})
     createdAt:string

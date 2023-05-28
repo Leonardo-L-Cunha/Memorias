@@ -6,7 +6,7 @@ import Input from "./Input"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useDispatch } from "react-redux"
-import { registerUser } from "../../actions/users"
+import { login, registerUser } from "../../actions/users"
 import { useNavigate } from "react-router-dom"
 const Auth = () =>{
     const classes = useStyles()
@@ -18,12 +18,17 @@ const Auth = () =>{
     const dispatch = useDispatch()
 
     const handleShowPassword = () => setShowPassword((previus) => !previus)
-
+    
     const onSubmit = (data) => {
        
-        dispatch(registerUser(data, navigate))
-        //colocar um setTimeOut e toatfy dps
-        swithMode()
+        if(isLogin){
+            dispatch(registerUser(data, navigate))
+            //colocar um setTimeOut e toatfy dps
+            swithMode()
+        }else{
+            dispatch(login(data,navigate))
+        }
+       
     }
 
     

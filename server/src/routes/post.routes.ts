@@ -7,9 +7,9 @@ import { CreatePostSchema, UpdatedPostSchema } from "../schema/post.schema";
 const postRoutes:Router = Router()
 
 postRoutes.get("",readPostController)
-postRoutes.post("",ensureDataIsValid(CreatePostSchema),createPostController)
-postRoutes.patch("/:id",ensureDataIsValid(UpdatedPostSchema),updatedPostController)
-postRoutes.patch("/:id/likePost",likePostController)
-postRoutes.delete("/:id",deletePostController)
+postRoutes.post("",ensureUserIsAuth,ensureDataIsValid(CreatePostSchema),createPostController)
+postRoutes.patch("/:id",ensureUserIsAuth,ensureDataIsValid(UpdatedPostSchema),updatedPostController)
+postRoutes.patch("/:id/likePost",ensureUserIsAuth,likePostController)
+postRoutes.delete("/:id",ensureUserIsAuth,deletePostController)
 
 export default postRoutes
