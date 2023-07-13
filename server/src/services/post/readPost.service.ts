@@ -7,7 +7,13 @@ import { ReturnPostSchema } from "../../schema/post.schema";
 const readPostService = async():Promise<PostTypeReturn> =>{
     const postRepository:Repository<Post> = AppDataSource.getRepository(Post)
 
-    const post:Post[] = await postRepository.find()
+    const post:Post[] = await postRepository.find(
+        {
+            relations:{
+                user: true
+            }
+        }
+    )
 
     
 

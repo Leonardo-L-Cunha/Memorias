@@ -5,6 +5,8 @@ import memories from "../../assets/memories.png"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import decote from 'jwt-decode'
+
 export const NavBar = () =>{
     const classes = useStyles()
     const [ user , setUser] = useState(JSON.parse(localStorage.getItem('user')))
@@ -19,6 +21,14 @@ export const NavBar = () =>{
 
     useEffect(() =>{
       const token = user?.token
+
+      if(token) {
+        const decodedToken = decote(token)
+
+        if(decodedToken.exp * 1000 < new Date().getTime()) {
+          logout()
+        }
+      }
 
       setUser(JSON.parse(localStorage.getItem('user')))
     },[location, user?.token])
